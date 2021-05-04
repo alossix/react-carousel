@@ -30,12 +30,12 @@ const Carousel = () => {
       <CarouselContainer>
         <ButtonLeft
           onClick={decrementHandler}
-          src={`/assets/arrow-left.png`}
+          src={`/assets/arrow-left.svg`}
         />
         <CarouselImage src={`/assets/${selectedImage}`} />
         <ButtonRight
           onClick={incrementHandler}
-          src={`/assets/arrow-right.png`}
+          src={`/assets/arrow-right.svg`}
         />
       </CarouselContainer>
     </>

@@ -7,23 +7,20 @@ export const CarouselContainer = styled.div`
   width: 80vw;
   height: 50vh;
   margin: auto;
-  background-color: lightgray;
   position: relative;
 `;
 
 export const CarouselImage = styled.div`
   height: 100%;
-  width: 100%;
+  width: 80%;
   background: url(${(p) => p.src}) no-repeat center/cover;
 `;
 
-export const ButtonLeft = styled.button`
+export const ButtonLeft = styled.div`
   height: 5vh;
-  width: 4vw;
+  width: 2vw;
   background: url(${(p) => p.src}) no-repeat center/contain;
-    center/contain;
-  background-color: black;
-  border: none;
+  background-color: lightgray;
   position: absolute;
   left: 0;
 
@@ -34,13 +31,11 @@ export const ButtonLeft = styled.button`
 
 export const ButtonRight = styled.div`
   height: 5vh;
-  width: 4vw;
+  width: 2vw;
   background: url(${(p) => p.src}) no-repeat center/contain;
-  background-color: black;
-  border: none;
+  background-color: lightgray;
   position: absolute;
   right: 0;
-  z-index: 100;
 
   &:hover {
     cursor: pointer;
