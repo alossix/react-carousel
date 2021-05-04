@@ -7,5 +7,5 @@ export const Background = styled.main`
   align-items: center;
   width: 100vw;
   height: 100vh;
-  background-color: lightcoral;
+  background-color: black;
 `;
