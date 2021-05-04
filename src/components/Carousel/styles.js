@@ -8,3 +8,9 @@ export const CarouselContainer = styled.div`
   margin: auto;
   background-color: lightblue;
 `;
+
+export const CarouselImage = styled.div`
+  height: 100%;
+  width: 100%;
+  background: url(${(p) => p.src}) no-repeat center/cover;
+`;
