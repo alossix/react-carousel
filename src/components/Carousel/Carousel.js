@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 
 import {
   CarouselContainer,
+  CarouselImageLeft,
   CarouselImage,
+  CarouselImageRight,
   ButtonLeft,
   ButtonRight,
 } from './styles';
@@ -11,47 +13,55 @@ import {
 const imageArr = ['1.jpeg', '2.jpeg', '3.jpeg', '4.jpeg', '5.jpeg'];
 
 const Carousel = () => {
-  // const [imageNumber, setImageNumber] = useState(0);
   const [centerImageNum, setCenterImageNum] = useState(0);
   const [slidingLeft, setSlidingLeft] = useState(false);
   const [slidingRight, setSlidingRight] = useState(false);
 
-  let centerImage = imageArr[centerImageNum];
-
   let leftImage =
-    centerImage === imageArr[0]
-      ? imageArr[imageArr.length - 1]
-      : imageArr[centerImage - 1];
-
-  let rightImage =
-    centerImage === imageArr.length - 1
-      ? imageArr[0]
-      : imageArr[centerImage + 1];
-
-  const decrementHandler = () => {
-    setSlidingLeft(true);
     centerImageNum === 0
-      ? setCenterImageNum(imageArr.length - 1)
-      : setCenterImageNum((n) => n - 1);
-    console.log(centerImage);
-    setSlidingLeft(false);
+      ? imageArr[imageArr.length - 1]
+      : imageArr[centerImageNum - 1];
+  let centerImage = imageArr[centerImageNum];
+  let rightImage =
+    centerImageNum === imageArr.length - 1
+      ? imageArr[0]
+      : imageArr[centerImageNum + 1];
+
+  const leftButtonHandler = () => {
+    setSlidingLeft(true);
+    setTimeout(() => {
+      setSlidingLeft(false);
+      centerImageNum === 0
+        ? setCenterImageNum(imageArr.length - 1)
+        : setCenterImageNum((n) => n - 1);
+    }, 2000);
   };
 
-  const incrementHandler = () => {
+  const rightButtonHandler = () => {
     setSlidingRight(true);
-    centerImageNum === imageArr.length - 1
-      ? setCenterImageNum(0)
-      : setCenterImageNum((n) => n + 1);
-    console.log(centerImage);
-    setSlidingRight(false);
+    setTimeout(() => {
+      setSlidingRight(false);
+      centerImageNum === imageArr.length - 1
+        ? setCenterImageNum(0)
+        : setCenterImageNum((n) => n + 1);
+    }, 2000);
   };
 
   return (
     <>
       <CarouselContainer>
         <ButtonLeft
-          onClick={decrementHandler}
-          src={`/assets/arrow-left.svg`}
+          as="button"
+          onClick={leftButtonHandler}
+          src={`/assets/arrow-left.png`}
+        />
+        <CarouselImageLeft
+          className={
+            (slidingLeft && 'moveleft') ||
+            (slidingRight && 'moveright')
+          }
+          src={`/assets/${leftImage}`}
+          disabled={slidingLeft || slidingRight}
         />
         <CarouselImage
           className={
@@ -60,9 +70,18 @@ const Carousel = () => {
           }
           src={`/assets/${centerImage}`}
         />
+        <CarouselImageRight
+          className={
+            (slidingLeft && 'moveleft') ||
+            (slidingRight && 'moveright')
+          }
+          src={`/assets/${rightImage}`}
+        />
         <ButtonRight
-          onClick={incrementHandler}
-          src={`/assets/arrow-right.svg`}
+          as="button"
+          onClick={rightButtonHandler}
+          src={`/assets/arrow-right.png`}
+          disabled={slidingLeft || slidingRight}
         />
       </CarouselContainer>
     </>

@@ -12,12 +12,3 @@ h1 {
   font-family: sans-serif;
   color: lightgray;
 }
-
-.moveleft {
-  transform: translateX(-100%);
-  transition: 2s ease;
-}
-.moveright {
-  transform: translateX(100%);
-  transition: 2s ease;
-}
