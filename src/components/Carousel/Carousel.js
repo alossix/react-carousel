@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 
 import {
   CarouselContainer,
-  CarouselImageLeft,
   CarouselImage,
-  CarouselImageRight,
   ButtonLeft,
   ButtonRight,
 } from './styles';
@@ -47,44 +45,41 @@ const Carousel = () => {
     }, 2000);
   };
 
+  const classNameProps = {
+    className:
+      (slidingLeft && 'moveleft') || (slidingRight && 'moveright'),
+  };
+
+  const buttonProps = {
+    as: 'button',
+    disabled: slidingLeft || slidingRight,
+  };
+
   return (
-    <>
-      <CarouselContainer>
-        <ButtonLeft
-          as="button"
-          onClick={leftButtonHandler}
-          src={`/assets/arrow-left.png`}
-        />
-        <CarouselImageLeft
-          className={
-            (slidingLeft && 'moveleft') ||
-            (slidingRight && 'moveright')
-          }
-          src={`/assets/${leftImage}`}
-          disabled={slidingLeft || slidingRight}
-        />
-        <CarouselImage
-          className={
-            (slidingLeft && 'moveleft') ||
-            (slidingRight && 'moveright')
-          }
-          src={`/assets/${centerImage}`}
-        />
-        <CarouselImageRight
-          className={
-            (slidingLeft && 'moveleft') ||
-            (slidingRight && 'moveright')
-          }
-          src={`/assets/${rightImage}`}
-        />
-        <ButtonRight
-          as="button"
-          onClick={rightButtonHandler}
-          src={`/assets/arrow-right.png`}
-          disabled={slidingLeft || slidingRight}
-        />
-      </CarouselContainer>
-    </>
+    <CarouselContainer>
+      <ButtonLeft
+        {...buttonProps}
+        onClick={leftButtonHandler}
+        src={`/assets/arrow-left.png`}
+      />
+      <CarouselImage
+        {...classNameProps}
+        src={`/assets/${leftImage}`}
+      />
+      <CarouselImage
+        {...classNameProps}
+        src={`/assets/${centerImage}`}
+      />
+      <CarouselImage
+        {...classNameProps}
+        src={`/assets/${rightImage}`}
+      />
+      <ButtonRight
+        {...buttonProps}
+        onClick={rightButtonHandler}
+        src={`/assets/arrow-right.png`}
+      />
+    </CarouselContainer>
   );
 };
 
