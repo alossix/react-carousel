@@ -12,6 +12,9 @@ const imageArr = ['1.jpeg', '2.jpeg', '3.jpeg', '4.jpeg', '5.jpeg'];
 
 const Carousel = () => {
   const [centerImageNum, setCenterImageNum] = useState(0);
+  const [xPosition, setXPosition] = useState(50);
+  const [touchStartLocation, setTouchStartLocation] =
+    useState(xPosition);
   const [slidingLeft, setSlidingLeft] = useState(false);
   const [slidingRight, setSlidingRight] = useState(false);
 
@@ -45,6 +48,26 @@ const Carousel = () => {
     }, 2000);
   };
 
+  const handleTouchStart = (e) => {
+    const firstTouchEvent = e.touches[0];
+    const locationX = firstTouchEvent.clientX;
+    setTouchStartLocation(locationX);
+  };
+
+  const handleTouchEnd = (e) => {
+    const firstTouchEvent = e.changedTouches[0];
+    const locationX = firstTouchEvent.clientX;
+    const differencesX = touchStartLocation - locationX;
+    const newPositionX = xPosition + -1 * differencesX * 0.05;
+    console.log(`firstTouchEvent: `, firstTouchEvent);
+    console.log(`touchStartLocation: `, touchStartLocation);
+    console.log(`locationX: `, locationX);
+    console.log(`differencesX:`, differencesX);
+    console.log(`newPositionX: `, newPositionX);
+    setXPosition(newPositionX);
+    console.log(xPosition + '%');
+  };
+
   const classNameProps = {
     className:
       (slidingLeft && 'moveleft') || (slidingRight && 'moveright'),
@@ -69,6 +92,9 @@ const Carousel = () => {
       <CarouselImage
         {...classNameProps}
         src={`/assets/${centerImage}`}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+        style={{ left: xPosition + '%' }}
       />
       <CarouselImage
         {...classNameProps}
