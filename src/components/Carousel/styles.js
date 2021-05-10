@@ -10,20 +10,7 @@ export const CarouselContainer = styled.div`
   position: relative;
   overflow: hidden;
 `;
-export const CarouselImageLeft = styled.div`
-  height: 100%;
-  min-width: 100%;
-  background: url(${(p) => p.src}) no-repeat center/cover;
 
-  &.moveleft {
-    transform: translateX(100%);
-    transition: 2s ease;
-  }
-  &.moveright {
-    transform: translateX(-100%);
-    transition: 2s ease;
-  }
-`;
 export const CarouselImage = styled.div`
   height: 100%;
   min-width: 100%;
@@ -37,20 +24,13 @@ export const CarouselImage = styled.div`
     transform: translateX(-100%);
     transition: 2s ease;
   }
-`;
 
-export const CarouselImageRight = styled.div`
-  height: 100%;
-  min-width: 100%;
-  background: url(${(p) => p.src}) no-repeat center/cover;
-
-  &.moveleft {
-    transform: translateX(100%);
-    transition: 2s ease;
+  &:hover {
+    cursor: grab;
   }
-  &.moveright {
-    transform: translateX(-100%);
-    transition: 2s ease;
+
+  &:hover .grabbing {
+    cursor: grabbing;
   }
 `;
 
