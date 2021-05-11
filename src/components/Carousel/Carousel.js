@@ -12,9 +12,11 @@ const imageArr = ['1.jpeg', '2.jpeg', '3.jpeg', '4.jpeg', '5.jpeg'];
 
 const Carousel = () => {
   const [centerImageNum, setCenterImageNum] = useState(0);
-  const [xPosition, setXPosition] = useState(50);
-  const [touchStartLocation, setTouchStartLocation] =
-    useState(xPosition);
+  const [moving, setMoving] = useState(false);
+  const [swipingLeft, setSwipingLeft] = useState(false);
+  const [swipingRight, setSwipingRight] = useState(false);
+  const [differencesX, setDifferencesX] = useState(0);
+  const [touchStartLocation, setTouchStartLocation] = useState(0);
   const [slidingLeft, setSlidingLeft] = useState(false);
   const [slidingRight, setSlidingRight] = useState(false);
 
@@ -49,28 +51,37 @@ const Carousel = () => {
   };
 
   const handleTouchStart = (e) => {
-    const firstTouchEvent = e.touches[0];
-    const locationX = firstTouchEvent.clientX;
-    setTouchStartLocation(locationX);
+    setTouchStartLocation(e.touches[0].clientX);
+  };
+
+  const handleTouchMove = (e) => {
+    setMoving(true);
+    const newLocationX = e.touches[0].clientX;
+    setDifferencesX(-1 * (touchStartLocation - newLocationX));
   };
 
   const handleTouchEnd = (e) => {
-    const firstTouchEvent = e.changedTouches[0];
-    const locationX = firstTouchEvent.clientX;
-    const differencesX = touchStartLocation - locationX;
-    const newPositionX = xPosition + -1 * differencesX * 0.05;
-    console.log(`firstTouchEvent: `, firstTouchEvent);
-    console.log(`touchStartLocation: `, touchStartLocation);
-    console.log(`locationX: `, locationX);
-    console.log(`differencesX:`, differencesX);
-    console.log(`newPositionX: `, newPositionX);
-    setXPosition(newPositionX);
-    console.log(xPosition + '%');
+    if (differencesX > 100) {
+      centerImageNum === 0
+        ? setCenterImageNum(imageArr.length - 1)
+        : setCenterImageNum((n) => n - 1);
+    } else if (differencesX < -100) {
+      centerImageNum === imageArr.length - 1
+        ? setCenterImageNum(0)
+        : setCenterImageNum((n) => n + 1);
+    }
+    setDifferencesX(0);
+    setTouchStartLocation(0);
+    setMoving(false);
   };
 
   const classNameProps = {
     className:
-      (slidingLeft && 'moveleft') || (slidingRight && 'moveright'),
+      (slidingLeft && 'moveleft') ||
+      (slidingRight && 'moveright') ||
+      (moving && 'moving') ||
+      (swipingLeft && 'swipeleft') ||
+      (swipingRight && 'swiperight'),
   };
 
   const buttonProps = {
@@ -88,17 +99,20 @@ const Carousel = () => {
       <CarouselImage
         {...classNameProps}
         src={`/assets/${leftImage}`}
+        style={{ transform: `translateX(${differencesX}px)` }}
       />
       <CarouselImage
         {...classNameProps}
         src={`/assets/${centerImage}`}
         onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
-        style={{ left: xPosition + '%' }}
+        style={{ transform: `translateX(${differencesX}px)` }}
       />
       <CarouselImage
         {...classNameProps}
         src={`/assets/${rightImage}`}
+        style={{ transform: `translateX(${differencesX}px)` }}
       />
       <ButtonRight
         {...buttonProps}

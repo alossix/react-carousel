@@ -16,13 +16,18 @@ export const CarouselImage = styled.div`
   min-width: 100%;
   background: url(${(p) => p.src}) no-repeat center/cover;
 
+  &.moving {
+    transform: translateX(${({ differencesX }) => differencesX});
+    /* transition: all 0s linear; */
+  }
+
   &.moveleft {
     transform: translateX(100%);
-    transition: 2s ease;
+    transition: 1.5s ease;
   }
   &.moveright {
     transform: translateX(-100%);
-    transition: 2s ease;
+    transition: 1.5s ease;
   }
 
   &:hover {
