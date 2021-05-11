@@ -90,7 +90,7 @@ const Carousel = () => {
       <ButtonLeft
         {...buttonProps}
         onClick={leftButtonHandler}
-        src={`/src/assets/arrow-left.png`}
+        src={`../../assets/arrow-left.png`}
       />
       <CarouselImage
         {...classNameProps}
