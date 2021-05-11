@@ -13,8 +13,6 @@ const imageArr = ['1.jpeg', '2.jpeg', '3.jpeg', '4.jpeg', '5.jpeg'];
 const Carousel = () => {
   const [centerImageNum, setCenterImageNum] = useState(0);
   const [moving, setMoving] = useState(false);
-  const [swipingLeft, setSwipingLeft] = useState(false);
-  const [swipingRight, setSwipingRight] = useState(false);
   const [differencesX, setDifferencesX] = useState(0);
   const [touchStartLocation, setTouchStartLocation] = useState(0);
   const [slidingLeft, setSlidingLeft] = useState(false);
@@ -37,7 +35,7 @@ const Carousel = () => {
       centerImageNum === 0
         ? setCenterImageNum(imageArr.length - 1)
         : setCenterImageNum((n) => n - 1);
-    }, 2000);
+    }, 1200);
   };
 
   const rightButtonHandler = () => {
@@ -47,20 +45,21 @@ const Carousel = () => {
       centerImageNum === imageArr.length - 1
         ? setCenterImageNum(0)
         : setCenterImageNum((n) => n + 1);
-    }, 2000);
+    }, 1200);
   };
 
-  const handleTouchStart = (e) => {
+  const touchStartHandler = (e) => {
+    console.log(e);
     setTouchStartLocation(e.touches[0].clientX);
   };
 
-  const handleTouchMove = (e) => {
+  const touchMoveHandler = (e) => {
     setMoving(true);
     const newLocationX = e.touches[0].clientX;
     setDifferencesX(-1 * (touchStartLocation - newLocationX));
   };
 
-  const handleTouchEnd = (e) => {
+  const touchEndHandler = (e) => {
     if (differencesX > 100) {
       centerImageNum === 0
         ? setCenterImageNum(imageArr.length - 1)
@@ -79,9 +78,7 @@ const Carousel = () => {
     className:
       (slidingLeft && 'moveleft') ||
       (slidingRight && 'moveright') ||
-      (moving && 'moving') ||
-      (swipingLeft && 'swipeleft') ||
-      (swipingRight && 'swiperight'),
+      (moving && 'moving'),
   };
 
   const buttonProps = {
@@ -104,9 +101,9 @@ const Carousel = () => {
       <CarouselImage
         {...classNameProps}
         src={`/assets/${centerImage}`}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
+        onTouchStart={touchStartHandler}
+        onTouchMove={touchMoveHandler}
+        onTouchEnd={touchEndHandler}
         style={{ transform: `translateX(${differencesX}px)` }}
       />
       <CarouselImage

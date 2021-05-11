@@ -18,24 +18,16 @@ export const CarouselImage = styled.div`
 
   &.moving {
     transform: translateX(${({ differencesX }) => differencesX});
-    /* transition: all 0s linear; */
   }
 
   &.moveleft {
-    transform: translateX(100%);
-    transition: 1.5s ease;
+    transform: translateX(100%) !important;
+    transition: all 1.2s ease;
   }
+
   &.moveright {
-    transform: translateX(-100%);
-    transition: 1.5s ease;
-  }
-
-  &:hover {
-    cursor: grab;
-  }
-
-  &:hover .grabbing {
-    cursor: grabbing;
+    transform: translateX(-100%) !important;
+    transition: all 1.2s ease;
   }
 `;
 
