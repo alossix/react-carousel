@@ -49,7 +49,6 @@ const Carousel = () => {
   };
 
   const touchStartHandler = (e) => {
-    console.log(e);
     setTouchStartLocation(e.touches[0].clientX);
   };
 
